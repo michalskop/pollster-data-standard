@@ -1,0 +1,29 @@
+{
+  "name": "pollster-data-standard",
+  "version": "0.1.0",
+  "description": "Data standard for polling and election data — parties, coalitions, candidates, polls, and aggregates. Zod schemas compiled to JSON Schema and published as OpenAPI/Redoc docs.",
+  "scripts": {
+    "build:schemas": "tsx scripts/build.ts",
+    "build:openapi": "node scripts/write-openapi.js",
+    "release": "node scripts/release.js",
+    "build": "npm run build:schemas && npm run build:openapi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michalskop/pollster-data-standard.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/michalskop/pollster-data-standard/issues"
+  },
+  "homepage": "https://michalskop.github.io/pollster-data-standard/",
+  "devDependencies": {
+    "@apidevtools/json-schema-ref-parser": "^14.2.1",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.20.6",
+    "zod-to-json-schema": "^3.24.6"
+  },
+  "dependencies": {
+    "zod": "^3.24.1"
+  }
+}

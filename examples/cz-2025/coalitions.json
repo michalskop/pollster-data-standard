@@ -1,0 +1,23 @@
+[
+  {
+    "id": "spolu",
+    "name": { "cs": "SPOLU – Občanská demokratická strana, KDU-ČSL a TOP 09", "en": "SPOLU coalition" },
+    "shortName": { "cs": "SPOLU", "en": "SPOLU" },
+    "color": "#034694",
+    "country": "cz",
+    "members": ["ods", "kdu", "top09"],
+    "electoralThreshold": 11,
+    "since": "2021-01-01"
+  },
+  {
+    "id": "pir-stan",
+    "name": { "cs": "Piráti a Starostové" },
+    "shortName": { "cs": "PirSTAN" },
+    "color": "#009bde",
+    "country": "cz",
+    "members": ["pirati", "stan"],
+    "electoralThreshold": 8,
+    "since": "2021-01-01",
+    "until": "2022-01-01"
+  }
+]

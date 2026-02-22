@@ -1,0 +1,6 @@
+node_modules/
+dist/
+stage/
+schemas/**/*.json
+schemas/**/*.md
+openapi.json

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "kantar-2025-02-01",
+    "country": "cz",
+    "electionType": "parliament",
+    "agency": "Kantar CZ",
+    "commissioner": "Česká televize",
+    "publishedAt": "2025-02-01",
+    "fieldworkStart": "2025-01-20",
+    "fieldworkEnd": "2025-01-31",
+    "sampleSize": 1052,
+    "methodology": "online",
+    "sourceUrl": "https://www.ceskatelevize.cz/",
+    "results": [
+      { "partyId": "ano",       "percent": 34.5 },
+      { "partyId": "spolu",     "percent": 18.2 },
+      { "partyId": "pirati",    "percent": 9.1  },
+      { "partyId": "stan",      "percent": 7.4  },
+      { "partyId": "spd",       "percent": 6.8  },
+      { "partyId": "motoriste", "percent": 5.9  },
+      { "partyId": "prisaha",   "percent": 4.2  }
+    ]
+  },
+  {
+    "id": "stem-2025-02-10",
+    "country": "cz",
+    "electionType": "parliament",
+    "agency": "STEM",
+    "commissioner": "CNN Prima News",
+    "publishedAt": "2025-02-10",
+    "fieldworkStart": "2025-02-03",
+    "fieldworkEnd": "2025-02-08",
+    "sampleSize": 1124,
+    "methodology": "online",
+    "results": [
+      { "partyId": "ano",       "percent": 35.8 },
+      { "partyId": "spolu",     "percent": 17.5 },
+      { "partyId": "pirati",    "percent": 8.6  },
+      { "partyId": "stan",      "percent": 7.1  },
+      { "partyId": "spd",       "percent": 7.3  },
+      { "partyId": "motoriste", "percent": 6.2  }
+    ]
+  }
+]
