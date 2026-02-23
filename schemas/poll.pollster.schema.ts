@@ -1,101 +1,104 @@
 import { z } from "zod";
-import { CountryCodeSchema } from "./country-code.pollster.schema";
-import { PollResultSchema } from "./poll-result.pollster.schema";
-
-/**
- * ElectionType — the type of election a poll is measuring.
- */
-export const ElectionTypeSchema = z.enum([
-  "parliament",   // lower/upper house / national assembly
-  "president",    // direct presidential election
-  "municipal",    // local / city council
-  "regional",     // regional / county assembly
-  "european",     // European Parliament
-  "senate",       // upper chamber where separate from parliament
-  "referendum",   // referendum / plebiscite
-]);
-
-export type ElectionType = z.infer<typeof ElectionTypeSchema>;
-
-/**
- * Methodology — how the poll was conducted.
- */
-export const MethodologySchema = z.enum([
-  "phone",         // CATI (computer-assisted telephone interviewing)
-  "online",        // CAWI (web panel, online questionnaire)
-  "face-to-face",  // CAPI / PAPI (in-person interviewing)
-  "mixed",         // combination of methods
-  "other",         // any other or unspecified method
-]);
-
-export type Methodology = z.infer<typeof MethodologySchema>;
+import { PollOutputSchema } from "./poll-output.pollster.schema";
 
 /**
  * Poll — a single published opinion poll.
  *
- * The `id` should be stable and unique across all polls in a dataset,
- * e.g. a slug derived from agency + published date: "kantar-2025-01-15".
+ * Raw data as reported by the polling agency. Modelled/aggregated outputs
+ * belong in EstimateSnapshot.
+ *
+ * Canonical `type` values: "parliamentary", "presidential", "municipal",
+ * "regional", "european", "referendum".
  */
 export const PollSchema = z.object({
-  /** Unique stable identifier for this poll, e.g. "kantar-2025-01-15". */
+  /**
+   * Unique stable identifier, e.g. "kantar-cz-2025-02-01".
+   */
   id: z.string().min(1),
 
-  /** Country this poll was conducted in. */
-  country: CountryCodeSchema,
+  /**
+   * Region(s) this poll covers.
+   * ISO 3166-1 alpha-2 (country) or ISO 3166-2 (sub-national) codes.
+   * Examples: "cz", ["cz", "sk"], "cz-pl" (Plzeňský kraj)
+   */
+  region: z.union([z.string().min(1), z.array(z.string().min(1))]),
 
-  /** Type of election being measured. */
-  electionType: ElectionTypeSchema,
+  /**
+   * Type of election being measured.
+   * Canonical values: "parliamentary", "presidential", "municipal",
+   * "regional", "european", "referendum".
+   */
+  type: z.string().optional(),
 
   /**
    * Name of the polling agency that conducted the fieldwork,
-   * e.g. "Kantar CZ", "STEM", "CVVM".
+   * e.g. "Kantar CZ", "STEM", "CVVM", "Pollster.eu".
    */
-  agency: z.string().min(1),
+  pollster: z.string().optional(),
 
   /**
-   * Name of the organisation or media outlet that commissioned the poll.
-   * Omit if self-commissioned or unknown.
+   * Organisation(s) that commissioned the poll.
+   * String for single sponsor; array for multiple.
    */
-  commissioner: z.string().min(1).optional(),
+  sponsors: z.union([z.string().min(1), z.array(z.string().min(1))]).optional(),
 
   /**
-   * Date the poll results were publicly released (ISO 8601 date, YYYY-MM-DD).
+   * URL(s) of the published source(s) for these results.
+   * String for single source; array for multiple.
+   */
+  url: z.union([z.string().url(), z.array(z.string().url())]).optional(),
+
+  /**
+   * Date (or datetime) results were publicly released (ISO 8601).
    * Use the earliest known publication date.
    */
-  publishedAt: z.string().date(),
+  published_at: z.string().optional(),
+
+  /** First day of fieldwork (ISO 8601 date). */
+  start_date: z.string().date().optional(),
+
+  /** Last day of fieldwork (ISO 8601 date). */
+  end_date: z.string().date().optional(),
 
   /**
-   * First day of fieldwork (ISO 8601 date).
-   * Omit if the agency did not publish fieldwork dates.
+   * Representative date for time-series placement (ISO 8601 date or datetime).
+   * Typically the fieldwork midpoint. Used when plotting poll on a timeline.
    */
-  fieldworkStart: z.string().date().optional(),
-
-  /**
-   * Last day of fieldwork (ISO 8601 date).
-   * Omit if the agency did not publish fieldwork dates.
-   */
-  fieldworkEnd: z.string().date().optional(),
+  central_date: z.string().optional(),
 
   /**
    * Number of respondents interviewed.
-   * Omit if the agency did not publish a sample size.
+   * Null if not published.
    */
-  sampleSize: z.number().int().positive().optional(),
-
-  /** How the poll was conducted. */
-  methodology: MethodologySchema.optional(),
+  sample_size: z.number().int().positive().nullable().optional(),
 
   /**
-   * Canonical URL of the primary published source for these results.
-   * Should link to the agency's press release or data page.
+   * Population the poll is intended to represent.
+   * Example: "18+", "registered voters", "likely voters"
    */
-  sourceUrl: z.string().url().optional(),
+  population: z.string().optional(),
 
   /**
-   * Per-party or per-coalition voting intention figures.
-   * Ordered by descending `percent` is conventional but not required.
+   * How the poll was conducted.
+   * Example: "100% CATI", "CAWI", "CAPI/CAWI mixed"
    */
-  results: z.array(PollResultSchema).min(1),
+  method: z.string().optional(),
+
+  /**
+   * Overall margin of error for the poll.
+   * Free string — agencies report in varying formats.
+   * Examples: "±3%", "2.8 pp", "95% CI ±3.1 pp"
+   */
+  margin_of_error: z.string().optional(),
+
+  /**
+   * Poll outputs (one or more views of the results).
+   * At minimum one output with type "core" or "model" is expected.
+   */
+  outputs: z.array(PollOutputSchema).min(1),
+
+  /** Extension point for additional fields. */
+  extras: z.record(z.string(), z.unknown()).optional(),
 });
 
 export type Poll = z.infer<typeof PollSchema>;

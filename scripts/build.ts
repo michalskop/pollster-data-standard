@@ -3,41 +3,38 @@ import path from "path";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
 import { LocalizedStringSchema } from "../schemas/localized-string.pollster.schema";
-import { CountryCodeSchema } from "../schemas/country-code.pollster.schema";
-import { PartySchema, PartiesSchema } from "../schemas/party.pollster.schema";
-import { CoalitionSchema, CoalitionsSchema } from "../schemas/coalition.pollster.schema";
-import { CandidateSchema, CandidatesSchema } from "../schemas/candidate.pollster.schema";
+import { HistoricalResultSchema } from "../schemas/historical-result.pollster.schema";
+import { ChoiceSchema, ChoicesSchema } from "../schemas/choice.pollster.schema";
 import { PollResultSchema } from "../schemas/poll-result.pollster.schema";
-import { ElectionTypeSchema, MethodologySchema, PollSchema, PollsSchema } from "../schemas/poll.pollster.schema";
-import { AggregateResultSchema } from "../schemas/aggregate-result.pollster.schema";
-import { AggregateSchema, AggregatesSchema } from "../schemas/aggregate.pollster.schema";
+import { PollOutputSchema } from "../schemas/poll-output.pollster.schema";
+import { PollSchema, PollsSchema } from "../schemas/poll.pollster.schema";
+import { CandidateSchema, CandidatesSchema } from "../schemas/candidate.pollster.schema";
+import { EstimateSchema } from "../schemas/estimate.pollster.schema";
+import { EstimateSnapshotSchema, EstimateSnapshotsSchema } from "../schemas/estimate-snapshot.pollster.schema";
 
 type SchemaItem = { name: string; fileBase: string; zod: any };
 
 const SCHEMAS: SchemaItem[] = [
-  // Primitives / shared
-  { name: "LocalizedString", fileBase: "localized-string.pollster", zod: LocalizedStringSchema },
-  { name: "CountryCode",     fileBase: "country-code.pollster",     zod: CountryCodeSchema },
-  { name: "ElectionType",    fileBase: "election-type.pollster",    zod: ElectionTypeSchema },
-  { name: "Methodology",     fileBase: "methodology.pollster",      zod: MethodologySchema },
+  // Shared primitives
+  { name: "LocalizedString",  fileBase: "localized-string.pollster",  zod: LocalizedStringSchema },
+  { name: "HistoricalResult", fileBase: "historical-result.pollster", zod: HistoricalResultSchema },
 
-  // Party / Coalition / Candidate
-  { name: "Party",        fileBase: "party.pollster",      zod: PartySchema },
-  { name: "Parties",      fileBase: "parties.pollster",    zod: PartiesSchema },
-  { name: "Coalition",    fileBase: "coalition.pollster",  zod: CoalitionSchema },
-  { name: "Coalitions",   fileBase: "coalitions.pollster", zod: CoalitionsSchema },
-  { name: "Candidate",    fileBase: "candidate.pollster",  zod: CandidateSchema },
-  { name: "Candidates",   fileBase: "candidates.pollster", zod: CandidatesSchema },
+  // Entities
+  { name: "Choice",    fileBase: "choice.pollster",     zod: ChoiceSchema },
+  { name: "Choices",   fileBase: "choices.pollster",    zod: ChoicesSchema },
+  { name: "Candidate", fileBase: "candidate.pollster",  zod: CandidateSchema },
+  { name: "Candidates",fileBase: "candidates.pollster", zod: CandidatesSchema },
 
   // Poll
-  { name: "PollResult",  fileBase: "poll-result.pollster", zod: PollResultSchema },
-  { name: "Poll",        fileBase: "poll.pollster",        zod: PollSchema },
-  { name: "Polls",       fileBase: "polls.pollster",       zod: PollsSchema },
+  { name: "PollResult", fileBase: "poll-result.pollster", zod: PollResultSchema },
+  { name: "PollOutput", fileBase: "poll-output.pollster", zod: PollOutputSchema },
+  { name: "Poll",       fileBase: "poll.pollster",        zod: PollSchema },
+  { name: "Polls",      fileBase: "polls.pollster",       zod: PollsSchema },
 
-  // Aggregate
-  { name: "AggregateResult", fileBase: "aggregate-result.pollster", zod: AggregateResultSchema },
-  { name: "Aggregate",       fileBase: "aggregate.pollster",        zod: AggregateSchema },
-  { name: "Aggregates",      fileBase: "aggregates.pollster",       zod: AggregatesSchema },
+  // Estimates
+  { name: "Estimate",          fileBase: "estimate.pollster",           zod: EstimateSchema },
+  { name: "EstimateSnapshot",  fileBase: "estimate-snapshot.pollster",  zod: EstimateSnapshotSchema },
+  { name: "EstimateSnapshots", fileBase: "estimate-snapshots.pollster", zod: EstimateSnapshotsSchema },
 ];
 
 const out = (p: string) => path.join(process.cwd(), p);

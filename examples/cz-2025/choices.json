@@ -1,0 +1,104 @@
+[
+  {
+    "id": "ano",
+    "name": "ANO, hnutí pro demokratické Česko",
+    "short_name": "ANO",
+    "names": { "en": "ANO" },
+    "region": "cz",
+    "color": "#003087",
+    "type": "party"
+  },
+  {
+    "id": "ods",
+    "name": "Občanská demokratická strana",
+    "short_name": "ODS",
+    "names": { "en": "Civic Democratic Party" },
+    "region": "cz",
+    "color": "#034694",
+    "type": "party",
+    "historical_results": [
+      { "election_id": "cz-parliament-2021", "values": { "percent": 11.3, "seats": 34 } },
+      { "election_id": "cz-parliament-2017", "values": { "percent": 11.3, "seats": 25 } }
+    ]
+  },
+  {
+    "id": "top09",
+    "name": "TOP 09",
+    "short_name": "TOP 09",
+    "region": "cz",
+    "color": "#c0185e",
+    "type": "party"
+  },
+  {
+    "id": "kdu",
+    "name": "Křesťanská a demokratická unie – Československá strana lidová",
+    "short_name": "KDU-ČSL",
+    "names": { "en": "KDU-ČSL" },
+    "region": "cz",
+    "color": "#f5a623",
+    "type": "party"
+  },
+  {
+    "id": "pirati",
+    "name": "Česká pirátská strana",
+    "short_name": "Piráti",
+    "names": { "en": "Czech Pirate Party" },
+    "region": "cz",
+    "color": "#1d1d1b",
+    "type": "party"
+  },
+  {
+    "id": "stan",
+    "name": "Starostové a nezávislí",
+    "short_name": "STAN",
+    "names": { "en": "Mayors and Independents" },
+    "region": "cz",
+    "color": "#009bde",
+    "type": "party"
+  },
+  {
+    "id": "spd",
+    "name": "Svoboda a přímá demokracie",
+    "short_name": "SPD",
+    "names": { "en": "Freedom and Direct Democracy" },
+    "region": "cz",
+    "color": "#c0392b",
+    "type": "party"
+  },
+  {
+    "id": "motoriste",
+    "name": "Motoristé sobě",
+    "short_name": "Motoristé",
+    "region": "cz",
+    "color": "#2ecc71",
+    "type": "party"
+  },
+  {
+    "id": "prisaha",
+    "name": "Přísaha",
+    "short_name": "Přísaha",
+    "region": "cz",
+    "color": "#8e44ad",
+    "type": "party"
+  },
+  {
+    "id": "spolu",
+    "name": "SPOLU",
+    "short_name": "SPOLU",
+    "region": "cz",
+    "color": "#034694",
+    "type": "coalition",
+    "members": ["ods", "kdu", "top09"],
+    "historical_results": [
+      {
+        "election_id": "cz-parliament-2021",
+        "values": { "percent": 27.8, "seats": 71 }
+      },
+      {
+        "election_id": "cz-parliament-2021",
+        "choice_id": "ods",
+        "values": { "percent": 11.3, "seats": 34 }
+      }
+    ]
+  }
+]

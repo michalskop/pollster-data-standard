@@ -1,31 +1,24 @@
 import { z } from "zod";
 
 /**
- * PollResult — a single party or coalition result within one poll.
+ * PollResult — a single choice's result within one poll output.
  *
- * `partyId` references either a Party.id or a Coalition.id.
- * Results that fall below a reporting threshold may be omitted by the agency;
- * the absence of an entry does not imply zero.
+ * `choice_id` references a Choice.id (party, coalition) or Candidate.id.
+ * A missing entry means the choice was not reported (possibly suppressed
+ * by `lower_cut_percent`); see PollOutput.under_lower_cut for named suppressions.
  */
 export const PollResultSchema = z.object({
   /**
-   * ID of the party or coalition (matches Party.id or Coalition.id).
-   * Use the coalition ID when a coalition ran as a unit in this poll.
+   * ID of the choice (party, coalition) or candidate.
+   * References Choice.id or Candidate.id.
    */
-  partyId: z.string().min(1),
+  choice_id: z.string().min(1),
 
   /**
    * Stated voting intention as a percentage of valid responses (0–100).
-   * This is the raw reported figure, not adjusted or modelled.
+   * Raw reported figure, not adjusted or modelled.
    */
-  percent: z.number().min(0).max(100),
-
-  /**
-   * Margin of error around `percent`, in percentage points (±).
-   * Represents the 95% confidence interval half-width when reported.
-   * Omit if the agency did not publish a margin for this party.
-   */
-  marginOfError: z.number().min(0).optional(),
+  value_percent: z.number().min(0).max(100),
 });
 
 export type PollResult = z.infer<typeof PollResultSchema>;
