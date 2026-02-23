@@ -4,6 +4,8 @@ import { zodToJsonSchema } from "zod-to-json-schema";
 
 import { LocalizedStringSchema } from "../schemas/localized-string.pollster.schema";
 import { HistoricalResultSchema } from "../schemas/historical-result.pollster.schema";
+import { DistributionValueSchema } from "../schemas/distribution-value.pollster.schema";
+import { DistributionSchema } from "../schemas/distribution.pollster.schema";
 import { ChoiceSchema, ChoicesSchema } from "../schemas/choice.pollster.schema";
 import { PollResultSchema } from "../schemas/poll-result.pollster.schema";
 import { PollOutputSchema } from "../schemas/poll-output.pollster.schema";
@@ -16,8 +18,10 @@ type SchemaItem = { name: string; fileBase: string; zod: any };
 
 const SCHEMAS: SchemaItem[] = [
   // Shared primitives
-  { name: "LocalizedString",  fileBase: "localized-string.pollster",  zod: LocalizedStringSchema },
-  { name: "HistoricalResult", fileBase: "historical-result.pollster", zod: HistoricalResultSchema },
+  { name: "LocalizedString",   fileBase: "localized-string.pollster",   zod: LocalizedStringSchema },
+  { name: "HistoricalResult",  fileBase: "historical-result.pollster",  zod: HistoricalResultSchema },
+  { name: "DistributionValue", fileBase: "distribution-value.pollster", zod: DistributionValueSchema },
+  { name: "Distribution",      fileBase: "distribution.pollster",       zod: DistributionSchema },
 
   // Entities
   { name: "Choice",    fileBase: "choice.pollster",     zod: ChoiceSchema },

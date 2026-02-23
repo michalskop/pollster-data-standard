@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { DistributionSchema } from "./distribution.pollster.schema";
 
 /**
  * Estimate — a model-derived estimate for a single choice.
@@ -47,6 +48,13 @@ export const EstimateSchema = z.object({
    * Default: 95.
    */
   probability_level_percentage: z.number().min(0).max(100).default(95),
+
+  /**
+   * Full probability or frequency distribution over discrete bins.
+   * Provides the complete shape of uncertainty beyond the point estimate
+   * and interval. The distribution `type` should match this Estimate's `type`.
+   */
+  distribution: DistributionSchema.optional(),
 });
 
 export type Estimate = z.infer<typeof EstimateSchema>;
