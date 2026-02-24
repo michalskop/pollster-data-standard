@@ -64,6 +64,21 @@ export const ChoiceSchema = z.object({
   members: z.array(z.string().min(1)).optional(),
 
   /**
+   * Fractional split weights for each member (values 0–1, sum ≈ 1).
+   *
+   * Used as the default distribution key when a poll reports only the
+   * aggregate coalition value and per-member breakdowns are unavailable.
+   * Typically set to the most recent election seat / vote shares.
+   *
+   * Example (SPOLU, CZ 2025 parliamentary election seats):
+   *   { "ods": 0.67, "top-09": 0.19, "kdu-csl": 0.14 }
+   *
+   * The compute layer normalises the values, so they do not need to sum
+   * to exactly 1.
+   */
+  member_shares: z.record(z.string().min(1), z.number().min(0)).optional(),
+
+  /**
    * Historical election results for this choice.
    * May include results from elections where the choice ran under a different
    * ID (e.g. a coalition's constituent parties' past results).
