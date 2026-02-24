@@ -13,6 +13,11 @@ import { PollSchema, PollsSchema } from "../schemas/poll.pollster.schema";
 import { CandidateSchema, CandidatesSchema } from "../schemas/candidate.pollster.schema";
 import { EstimateSchema } from "../schemas/estimate.pollster.schema";
 import { EstimateSnapshotSchema, EstimateSnapshotsSchema } from "../schemas/estimate-snapshot.pollster.schema";
+import { DerivationSchema } from "../schemas/derivation.pollster.schema";
+import { DerivedResultSchema } from "../schemas/derived-result.pollster.schema";
+import { ScenarioSchema, ScenariosSchema } from "../schemas/scenario.pollster.schema";
+import { ScenarioPollSchema } from "../schemas/scenario-poll.pollster.schema";
+import { ScenarioSnapshotSchema, ScenarioSnapshotsSchema } from "../schemas/scenario-snapshot.pollster.schema";
 
 type SchemaItem = { name: string; fileBase: string; zod: any };
 
@@ -39,6 +44,15 @@ const SCHEMAS: SchemaItem[] = [
   { name: "Estimate",          fileBase: "estimate.pollster",           zod: EstimateSchema },
   { name: "EstimateSnapshot",  fileBase: "estimate-snapshot.pollster",  zod: EstimateSnapshotSchema },
   { name: "EstimateSnapshots", fileBase: "estimate-snapshots.pollster", zod: EstimateSnapshotsSchema },
+
+  // Scenarios (derivation layer)
+  { name: "Derivation",        fileBase: "derivation.pollster",         zod: DerivationSchema },
+  { name: "DerivedResult",     fileBase: "derived-result.pollster",     zod: DerivedResultSchema },
+  { name: "Scenario",          fileBase: "scenario.pollster",           zod: ScenarioSchema },
+  { name: "Scenarios",         fileBase: "scenarios.pollster",          zod: ScenariosSchema },
+  { name: "ScenarioPoll",      fileBase: "scenario-poll.pollster",      zod: ScenarioPollSchema },
+  { name: "ScenarioSnapshot",  fileBase: "scenario-snapshot.pollster",  zod: ScenarioSnapshotSchema },
+  { name: "ScenarioSnapshots", fileBase: "scenario-snapshots.pollster", zod: ScenarioSnapshotsSchema },
 ];
 
 const out = (p: string) => path.join(process.cwd(), p);
