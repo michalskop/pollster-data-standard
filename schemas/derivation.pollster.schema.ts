@@ -21,6 +21,12 @@ export const DerivationMethodSchema = z.enum([
   "pool_estimate",
   /** Estimated from neighboring polls by date. Reserved — not yet implemented. */
   "temporal",
+  /**
+   * Sum of all poll values not mapped to any named choice in the scenario.
+   * Used exclusively for the scenario's others_id catch-all choice.
+   * source_members lists every choice_id that was included in the sum.
+   */
+  "others_sum",
   /** No basis for estimation. value_percent will be null. */
   "absent",
 ]);

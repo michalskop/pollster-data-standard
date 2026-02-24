@@ -130,6 +130,37 @@ export const ScenarioSchema = z.object({
    */
   fallback: z.enum(["members_sum", "none"]).default("members_sum"),
 
+  /**
+   * Coalition composition map: choice_id → member choice_ids.
+   *
+   * Defines which parties make up each coalition **within this scenario**.
+   * This is the authoritative source for member lookups during derivation —
+   * the compute script uses this map before falling back to Choice.members
+   * in choices.json. Listing it here makes the scenario self-documenting
+   * and allows the same choice to have different compositions across scenarios
+   * (e.g. a coalition that changes members between election terms).
+   *
+   * Example:
+   *   { "spolu": ["ods", "top-09", "kdu-csl"], "stacilo": ["kscm"] }
+   */
+  composition: z.record(z.string(), z.array(z.string())).optional(),
+
+  /**
+   * choice_id of the catch-all "others" bucket.
+   *
+   * When set, any party that appears in a poll's output but is NOT listed
+   * in `choices` and is NOT a member of a listed coalition is automatically
+   * added to this bucket. This means new parties showing up in polls flow
+   * into "others" without requiring changes to the scenario definition.
+   *
+   * The others_id choice must also appear in `choices` (typically last).
+   * Its value = sum of all unmapped parties in the poll + the pollster's
+   * own jiné-strany measurement (if the pollster uses a different id).
+   *
+   * Example: "jine-strany"
+   */
+  others_id: z.string().optional(),
+
   /** Policy for filling missing values. */
   estimation: ScenarioEstimationSchema,
 
