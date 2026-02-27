@@ -3,6 +3,8 @@ import { z } from "zod";
 /**
  * DistributionValue — one bin of a probability or frequency distribution.
  *
+ * Layer: aggregate (embedded in Distribution, which is embedded in Estimate)
+ *
  * `x` is the bin label (string to accommodate both exact values and ranges):
  *   - exact:  "10"       — the value is exactly 10
  *   - range:  "9-10"     — the value falls in [9, 10]
