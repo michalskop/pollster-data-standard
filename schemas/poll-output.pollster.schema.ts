@@ -55,7 +55,28 @@ export const PollOutputSchema = z.object({
   under_lower_cut: z.array(z.string()).optional(),
 
   /** Per-choice voting intention figures for this output. */
-  results: z.array(PollResultSchema).min(1),
+  results: z.array(PollResultSchema),
+
+  /**
+   * Aggregate percentage for parties/candidates that are not individually
+   * listed in `results` (e.g. combined "other parties" figure).
+   */
+  others_percent: z.number().min(0).max(100).optional(),
+
+  /**
+   * Percentage of respondents who are undecided or answered "don't know".
+   */
+  undecided_percent: z.number().min(0).max(100).optional(),
+
+  /**
+   * Percentage of respondents who plan to abstain / will not vote.
+   */
+  abstention_percent: z.number().min(0).max(100).optional(),
+
+  /**
+   * Percentage of respondents who plan to cast a blank or null ballot.
+   */
+  blank_percent: z.number().min(0).max(100).optional(),
 
   /** Extension point for additional fields. */
   extras: z.record(z.string(), z.unknown()).optional(),
