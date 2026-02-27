@@ -4,6 +4,8 @@ import { DistributionValueSchema } from "./distribution-value.pollster.schema";
 /**
  * Distribution — a probability or frequency distribution over discrete bins.
  *
+ * Layer: aggregate (optional field on Estimate, part of EstimateSnapshot)
+ *
  * Used to represent the full uncertainty of a model estimate, not just
  * the point value and interval. Attached as an optional field on Estimate.
  *

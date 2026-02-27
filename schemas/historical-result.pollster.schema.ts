@@ -3,6 +3,8 @@ import { z } from "zod";
 /**
  * HistoricalResult — one previous-election result stored on a Choice.
  *
+ * Layer: reference data (embedded in Choice)
+ *
  * Used to track what a party, coalition, or candidate achieved in past
  * elections, even if the choice ran under a different ID at the time.
  *

@@ -3,6 +3,8 @@ import { z } from "zod";
 /**
  * DerivationMethod — how a DerivedResult value was obtained.
  *
+ * Layer: compute (provenance metadata — embedded in DerivedResult)
+ *
  * Priority order used by the compute script:
  *   direct > members_sum > members_partial > cut_estimate > pool_estimate > absent
  *
@@ -35,6 +37,8 @@ export type DerivationMethod = z.infer<typeof DerivationMethodSchema>;
 
 /**
  * Derivation — full provenance record attached to every DerivedResult.
+ *
+ * Layer: compute (provenance metadata — embedded in DerivedResult)
  *
  * Only fields relevant to the specific method need to be populated.
  */

@@ -4,11 +4,19 @@ import { ScenarioPollSchema } from "./scenario-poll.pollster.schema";
 /**
  * ScenarioSnapshot — the output file for one scenario.
  *
- * Written by the compute-scenarios script to:
- *   apps/{instance}/data/{election}/{term}/scenarios/{scenario_id}.json
+ * Layer: compute (intermediate between source and aggregate layers)
  *
- * Contains every poll in the dataset normalised to the scenario's choice
- * grouping, with full derivation provenance on each value.
+ * Written by the compute-scenarios script. Contains every source poll
+ * normalised to the scenario's choice grouping, with full derivation
+ * provenance on each value. This is the input consumed by the simulation /
+ * poll-of-polls step that produces EstimateSnapshot.
+ *
+ * Relationship to other schemas:
+ *   Input:  Poll (source layer) + Scenario (config)
+ *   Output: ScenarioSnapshot (this file) → fed into EstimateSnapshot
+ *
+ * Written to:
+ *   apps/{instance}/data/{election}/{term}/scenarios/{scenario_id}.json
  */
 export const ScenarioSnapshotSchema = z.object({
   /** References Scenario.id. */

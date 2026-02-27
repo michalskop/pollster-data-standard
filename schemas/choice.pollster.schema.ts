@@ -5,8 +5,15 @@ import { HistoricalResultSchema } from "./historical-result.pollster.schema";
 /**
  * Choice — any entity that can appear in poll results.
  *
+ * Layer: reference data
+ *
  * Covers parties, coalitions, and independent groupings.
  * Coalitions set type="coalition" and list their constituent party IDs in `members`.
+ *
+ * Choice.id is the stable key used across all layers:
+ *   - PollResult.choice_id     (source layer — what agencies report)
+ *   - DerivedResult.choice_id  (compute layer — normalised values)
+ *   - Estimate.choice_id       (aggregate layer — model outputs)
  *
  * Candidates in direct elections (presidential, senate) use the separate
  * Candidate schema.

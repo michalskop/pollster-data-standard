@@ -4,8 +4,33 @@ import { PollOutputSchema } from "./poll-output.pollster.schema";
 /**
  * Poll — a single published opinion poll.
  *
- * Raw data as reported by the polling agency. Modelled/aggregated outputs
- * belong in EstimateSnapshot.
+ * Layer: source / ingestion (raw agency-reported data)
+ *
+ * Contains data exactly as reported by the polling agency. Nothing here
+ * is computed or adjusted by the aggregation pipeline.
+ *
+ * Data flow overview:
+ *
+ *   SOURCE                 COMPUTE                  AGGREGATE
+ *   ──────────────────     ──────────────────────   ─────────────────────────
+ *   Poll                   Scenario (config)        EstimateSnapshot
+ *   └─ PollOutput          └─ ScenarioEstimation    └─ Estimate
+ *      └─ PollResult       ScenarioSnapshot             └─ Distribution
+ *   Choice / Candidate     └─ ScenarioPoll
+ *                              └─ DerivedResult
+ *                                 └─ Derivation
+ *
+ *   - The SOURCE layer stores what agencies publish (this file).
+ *   - The COMPUTE layer normalises source polls to a scenario's choice
+ *     grouping with full derivation provenance (ScenarioSnapshot).
+ *   - The AGGREGATE layer holds poll-of-polls / Monte Carlo outputs
+ *     (EstimateSnapshot). These are never nested inside Poll.
+ *
+ * Note on output_type = "model":
+ *   When a polling agency publishes both raw results and their own
+ *   internally weighted figures, the weighted figures are stored as a
+ *   PollOutput with output_type = "model". This is distinct from the
+ *   aggregation pipeline's model, which lives in EstimateSnapshot.
  *
  * Canonical `type` values: "parliamentary", "presidential", "municipal",
  * "regional", "european", "referendum".
@@ -94,6 +119,8 @@ export const PollSchema = z.object({
   /**
    * Poll outputs (one or more views of the results).
    * At minimum one output with type "core" or "model" is expected.
+   * See PollOutput for the distinction between agency-reported "model"
+   * outputs and aggregation-pipeline outputs (which live in EstimateSnapshot).
    */
   outputs: z.array(PollOutputSchema).min(1),
 

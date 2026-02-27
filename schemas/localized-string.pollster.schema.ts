@@ -2,9 +2,13 @@ import { z } from "zod";
 
 /**
  * LocalizedString — a map of BCP 47 locale codes to strings.
+ *
+ * Layer: reference data (shared utility type)
+ *
  * At least one locale must be present.
- * Examples: { cs: "Občanská demokratická strana" }
- *           { cs: "ANO", sk: "ANO", en: "ANO" }
+ * Examples:
+ *   { cs: "Občanská demokratická strana" }
+ *   { cs: "ANO", sk: "ANO", en: "ANO" }
  */
 export const LocalizedStringSchema = z
   .record(
