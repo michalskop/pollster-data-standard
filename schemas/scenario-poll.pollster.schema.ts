@@ -3,24 +3,20 @@ import { DerivedResultSchema } from "./derived-result.pollster.schema";
 
 /**
  * ScenarioPoll — all derived results for one poll under one scenario.
- *
- * Layer: compute (contained within ScenarioSnapshot)
- *
- * Maps a single source Poll (by poll_id) to the scenario's choice grouping.
- * Every choice listed in Scenario.choices will have a DerivedResult entry,
- * even those where no direct value was available (method = "absent" or an
- * estimation method).
+ * Layer: compute
  */
 export const ScenarioPollSchema = z.object({
-  /** References Poll.id. */
-  poll_id: z.string().min(1),
-
-  /**
-   * Derived results for each choice in the scenario.
-   * Every choice listed in Scenario.choices will have an entry here
-   * (with value_percent = null and method = "absent" if unresolvable).
-   */
-  results: z.array(DerivedResultSchema),
-});
+  poll_id: z.string().min(1).describe("References Poll.id."),
+  results: z.array(DerivedResultSchema).describe(
+    "Derived results for each choice in the scenario. " +
+    "Every choice listed in Scenario.choices has an entry here " +
+    "(with value_percent=null and method=\"absent\" if unresolvable)."
+  ),
+}).describe(
+  "All derived results for one poll under one scenario.\n\n" +
+  "Layer: compute (contained in ScenarioSnapshot)\n\n" +
+  "Maps a single source Poll to the scenario's choice grouping. " +
+  "Input: Poll (source) + Scenario (config). Output: feeds into EstimateSnapshot (aggregate)."
+);
 
 export type ScenarioPoll = z.infer<typeof ScenarioPollSchema>;
