@@ -4,7 +4,12 @@ import { DerivedResultSchema } from "./derived-result.pollster.schema";
 /**
  * ScenarioPoll — all derived results for one poll under one scenario.
  *
- * Contained within a ScenarioSnapshot.
+ * Layer: compute (contained within ScenarioSnapshot)
+ *
+ * Maps a single source Poll (by poll_id) to the scenario's choice grouping.
+ * Every choice listed in Scenario.choices will have a DerivedResult entry,
+ * even those where no direct value was available (method = "absent" or an
+ * estimation method).
  */
 export const ScenarioPollSchema = z.object({
   /** References Poll.id. */
