@@ -4,11 +4,24 @@ import { EstimateSchema } from "./estimate.pollster.schema";
 /**
  * EstimateSnapshot — the output of a polling aggregation model at one point in time.
  *
+ * Layer: aggregate (final output of the pipeline)
+ *
  * Combines multiple individual polls using a statistical model
- * (e.g. Bayesian poll averaging, house-effect correction) and outputs
- * probability distributions over party support and seat counts.
+ * (e.g. Bayesian poll averaging, house-effect correction, Monte Carlo
+ * seat simulation) and outputs probability distributions over party
+ * support and seat counts.
  *
  * A new snapshot is produced each time the model is recomputed.
+ *
+ * IMPORTANT — scope boundary:
+ *   EstimateSnapshot is the home for all computed/modelled outputs —
+ *   poll-of-polls aggregates, seat distributions, entry probabilities,
+ *   and majority scenario probabilities. It is completely separate from
+ *   Poll / PollOutput, which store only what polling agencies publish.
+ *   An EstimateSnapshot is never nested inside a Poll.
+ *
+ * Data flow:
+ *   Poll (source) → ScenarioSnapshot (compute) → EstimateSnapshot (aggregate)
  */
 export const EstimateSnapshotSchema = z.object({
   /** Unique stable identifier, e.g. "cz-parliament-2025-02-23". */
