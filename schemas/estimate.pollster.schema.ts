@@ -4,8 +4,14 @@ import { DistributionSchema } from "./distribution.pollster.schema";
 /**
  * Estimate — a model-derived estimate for a single choice.
  *
+ * Layer: aggregate (contained within EstimateSnapshot)
+ *
  * Part of an EstimateSnapshot. Covers any quantity the model computes:
  * voting share, seat count, or entry probability.
+ *
+ * These are outputs of the aggregation pipeline (poll-of-polls, Monte Carlo,
+ * etc.), not raw values reported by any polling agency. For agency-reported
+ * values see PollResult (source layer) or DerivedResult (compute layer).
  *
  * Canonical `type` values:
  *   "percents"             — estimated voting share
