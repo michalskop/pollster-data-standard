@@ -4,6 +4,8 @@ import { z } from "zod";
  * ScenarioEstimation — policy for filling missing values when deriving
  * a poll's results under a scenario.
  *
+ * Layer: config (input to the compute layer)
+ *
  * All thresholds are configurable per scenario so different scenarios
  * can apply different levels of caution.
  */
@@ -78,6 +80,8 @@ export type ScenarioEstimation = z.infer<typeof ScenarioEstimationSchema>;
 /**
  * Scenario — definition of a display/simulation grouping.
  *
+ * Layer: config (input to the compute layer)
+ *
  * A scenario specifies exactly which choices are included, in what order,
  * and how to fill in missing values from raw poll data. It is the input
  * to the compute-scenarios script which produces ScenarioSnapshot files.
@@ -133,7 +137,7 @@ export const ScenarioSchema = z.object({
   /**
    * Coalition composition map: choice_id → member choice_ids.
    *
-   * Defines which parties make up each coalition **within this scenario**.
+   * Defines which parties make up each coalition within this scenario.
    * This is the authoritative source for member lookups during derivation —
    * the compute script uses this map before falling back to Choice.members
    * in choices.json. Listing it here makes the scenario self-documenting
