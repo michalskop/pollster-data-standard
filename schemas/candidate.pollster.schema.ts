@@ -3,9 +3,14 @@ import { z } from "zod";
 /**
  * Candidate — an individual running in a direct election.
  *
+ * Layer: reference data
+ *
  * Used for presidential races, senate elections, and other contests
  * where individual candidate data is relevant.
  * For proportional-list elections, use Choice instead.
+ *
+ * Candidates are referenced by `choice_id` in PollResult and Estimate,
+ * and by `supported_by` links from other candidates or Choice entries.
  */
 export const CandidateSchema = z.object({
   /**
