@@ -4,20 +4,34 @@ import { PollResultSchema } from "./poll-result.pollster.schema";
 /**
  * PollOutput — one "view" of results within a poll.
  *
+ * Layer: source / ingestion (raw agency-reported data)
+ *
  * A single poll may publish multiple outputs, e.g.:
- *   - "core"       : respondents who will definitely vote
- *   - "potential"  : including those who might vote for the party
- *   - "model"      : agency's own modelled/weighted figures
- *   - "participation": turnout-related figures
+ *   - "core"          : respondents who will definitely vote
+ *   - "potential"     : including those who might vote for the party
+ *   - "model"         : the agency's own modelled/weighted figures
+ *   - "participation" : turnout-related figures (abstention, undecided, blank)
  *
  * Each output may cover a different sub-population and apply its own
  * lower reporting threshold.
+ *
+ * IMPORTANT — scope boundary:
+ *   PollOutput (and Poll) represent data exactly as the polling agency
+ *   publishes it. This includes any internal model the agency applies to
+ *   their own data (output_type = "model" means the agency's model, not
+ *   the aggregation pipeline's model). Poll-of-polls aggregates, Monte
+ *   Carlo simulations, and other computed estimates are stored in
+ *   EstimateSnapshot — a completely separate schema that is never nested
+ *   inside Poll.
  */
 export const PollOutputSchema = z.object({
   /**
    * Type of output.
    * Canonical values: "core", "potential", "model", "participation".
    * Other values allowed.
+   *
+   * Note: "model" here means the polling agency's own weighted/adjusted
+   * figures, not anything produced by the aggregation pipeline.
    */
   output_type: z.string().min(1),
 
@@ -54,12 +68,17 @@ export const PollOutputSchema = z.object({
    */
   under_lower_cut: z.array(z.string()).optional(),
 
-  /** Per-choice voting intention figures for this output. */
+  /**
+   * Per-choice voting intention figures for this output.
+   * May be empty when the output records only aggregate figures
+   * (e.g. a participation output with only `undecided_percent`).
+   */
   results: z.array(PollResultSchema),
 
   /**
    * Aggregate percentage for parties/candidates that are not individually
-   * listed in `results` (e.g. combined "other parties" figure).
+   * listed in `results` (e.g. combined "other parties" figure reported by
+   * the agency alongside the named results).
    */
   others_percent: z.number().min(0).max(100).optional(),
 
