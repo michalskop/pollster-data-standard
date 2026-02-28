@@ -11,8 +11,11 @@ export const PollsterSchema = z.object({
   name: z.string().min(1).describe(
     "Full official name of the polling agency, e.g. \"Kantar CZ\", \"STEM\", \"CVVM\"."
   ),
+  short_name: z.string().optional().describe(
+    "Abbreviated display name for charts and tables, e.g. \"Kantar\", \"STEM\". Consistent with Choice.short_name."
+  ),
   abbreviation: z.string().optional().describe(
-    "Short abbreviation for charts and tables, e.g. \"Kantar\", \"STEM\"."
+    "Very short abbreviation for space-constrained contexts, e.g. \"KNT\", \"STM\"."
   ),
   url: z.string().url().optional().describe("URL of the pollster's website or primary source page."),
   score: z.number().nullable().optional().describe(
