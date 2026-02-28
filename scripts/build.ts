@@ -7,6 +7,7 @@ import { HistoricalResultSchema } from "../schemas/historical-result.pollster.sc
 import { DistributionValueSchema } from "../schemas/distribution-value.pollster.schema";
 import { DistributionSchema } from "../schemas/distribution.pollster.schema";
 import { ChoiceSchema, ChoicesSchema } from "../schemas/choice.pollster.schema";
+import { PollsterSchema, PollstersSchema } from "../schemas/pollster.pollster.schema";
 import { PollResultSchema } from "../schemas/poll-result.pollster.schema";
 import { PollOutputSchema } from "../schemas/poll-output.pollster.schema";
 import { PollSchema, PollsSchema } from "../schemas/poll.pollster.schema";
@@ -29,10 +30,12 @@ const SCHEMAS: SchemaItem[] = [
   { name: "Distribution",      fileBase: "distribution.pollster",       zod: DistributionSchema },
 
   // Entities
-  { name: "Choice",    fileBase: "choice.pollster",     zod: ChoiceSchema },
-  { name: "Choices",   fileBase: "choices.pollster",    zod: ChoicesSchema },
-  { name: "Candidate", fileBase: "candidate.pollster",  zod: CandidateSchema },
-  { name: "Candidates",fileBase: "candidates.pollster", zod: CandidatesSchema },
+  { name: "Choice",     fileBase: "choice.pollster",     zod: ChoiceSchema },
+  { name: "Choices",    fileBase: "choices.pollster",    zod: ChoicesSchema },
+  { name: "Candidate",  fileBase: "candidate.pollster",  zod: CandidateSchema },
+  { name: "Candidates", fileBase: "candidates.pollster", zod: CandidatesSchema },
+  { name: "Pollster",   fileBase: "pollster.pollster",   zod: PollsterSchema },
+  { name: "Pollsters",  fileBase: "pollsters.pollster",  zod: PollstersSchema },
 
   // Poll
   { name: "PollResult", fileBase: "poll-result.pollster", zod: PollResultSchema },
