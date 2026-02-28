@@ -19,7 +19,7 @@ export const PollSchema = z.object({
     "Type of election being measured. Canonical values: \"parliamentary\", \"presidential\", \"municipal\", \"regional\", \"european\", \"referendum\"."
   ),
   pollster: z.string().optional().describe(
-    "Name of the polling agency that conducted the fieldwork, e.g. \"Kantar CZ\", \"STEM\"."
+    "ID or name of the polling agency. Should reference Pollster.id when a pollsters.json reference file is maintained."
   ),
   sponsors: z.union([z.string().min(1), z.array(z.string().min(1))]).optional().describe(
     "Organisation(s) that commissioned the poll. String for single sponsor; array for multiple."
