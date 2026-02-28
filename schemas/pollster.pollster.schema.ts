@@ -6,25 +6,25 @@ import { z } from "zod";
  */
 export const PollsterSchema = z.object({
   id: z.string().min(1).regex(/^[a-z0-9-]+$/, "Must be a lowercase slug").describe(
-    "Stable slug identifier, e.g. \"kantar-cz\", \"stem\", \"cvvm\". " +
-    "Referenced by Poll.pollster when Poll.pollster is used as a foreign key."
+    "Stable slug identifier, e.g. \"kantar-cz\", \"stem\", \"cvvm\". Referenced by Poll.pollster."
   ),
   name: z.string().min(1).describe(
     "Full official name of the polling agency, e.g. \"Kantar CZ\", \"STEM\", \"CVVM\"."
   ),
-  short_name: z.string().optional().describe(
-    "Abbreviated display name for charts and tables, e.g. \"Kantar\", \"STEM\"."
-  ),
   abbreviation: z.string().optional().describe(
-    "Very short abbreviation, e.g. \"KNT\", \"STM\". Used where space is very limited."
+    "Short abbreviation for charts and tables, e.g. \"Kantar\", \"STEM\"."
   ),
-  url: z.string().url().optional().describe("URL of the pollster's website."),
+  url: z.string().url().optional().describe("URL of the pollster's website or primary source page."),
+  score: z.number().nullable().optional().describe(
+    "Poll-of-polls quality/reliability score for this pollster. " +
+    "Used as a weight multiplier when computing weighted poll averages. " +
+    "Null means the pollster is not currently scored (excluded from weighted averages). " +
+    "Scale and interpretation are pipeline-defined."
+  ),
   region: z.union([z.string().min(1), z.array(z.string().min(1))]).optional().describe(
     "Region(s) the pollster primarily operates in. ISO 3166-1 alpha-2 or ISO 3166-2 codes."
   ),
-  extras: z.record(z.string(), z.unknown()).optional().describe(
-    "Extension point for pipeline-specific fields, e.g. poll-of-polls weight score."
-  ),
+  extras: z.record(z.string(), z.unknown()).optional().describe("Extension point for additional fields."),
 }).describe(
   "A polling company or research institution.\n\n" +
   "Layer: reference data\n\n" +
